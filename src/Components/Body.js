@@ -24,11 +24,9 @@ const Body = () => {
     );
   };
 
-  if (list.length === 0) {
-    return <Shimmer />;
-  }
-
-  return (
+  return list.length === 0 ? (
+    <Shimmer />
+  ) : (
     <div className="body">
       <div className="search">
         <input
