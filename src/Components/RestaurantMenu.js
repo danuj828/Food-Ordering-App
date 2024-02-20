@@ -28,13 +28,13 @@ const RestaurantMenu = () => {
   }
 
   const { itemCards } =
-    resInfo.cards[2].groupedCard.cardGroupMap.REGULAR.cards[2].card.card;
+    resInfo.cards[4].groupedCard.cardGroupMap.REGULAR.cards[2].card.card;
 
   return (
     <div className="menu">
-      <h1>{resInfo.cards[0].card.card.info.name}</h1>
-      <h3>{resInfo.cards[0].card.card.info.cuisines.join(", ")}</h3>
-      <h3>{resInfo.cards[0].card.card.info.costForTwoMessage}</h3>
+      <h1>{resInfo.cards[2].card.card.info.name}</h1>
+      <h3>{resInfo.cards[2].card.card.info.cuisines.join(", ")}</h3>
+      <h3>{resInfo.cards[2].card.card.info.costForTwoMessage}</h3>
       <ul>
         {itemCards.map((item, index) => (
           <li key={index}>
