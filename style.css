@@ -25,6 +25,8 @@
 }
 
 .res-card {
+  height: 500px;
+  width: 100%;
   max-width: 250px;
   padding: 10px 12px;
   border: 1px solid #cce7d0;
@@ -35,8 +37,7 @@
 }
 
 .res-card-container {
-  height: 100%;
-  width: 100%;
+  border: 1px solid beige;
 }
 
 .res-card:hover {
@@ -93,4 +94,14 @@
   border-radius: 1px solid black;
   box-shadow: 2px 2px 20px rgb(0, 0, 0, 0.3);
   background-color: antiquewhite;
+}
+
+.pagination{
+  text-align: center;
+  justify-content: center;
+}
+
+.btn{
+  margin: 10px;
+  cursor: pointer;
 }

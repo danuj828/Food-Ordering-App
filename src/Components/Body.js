@@ -3,19 +3,22 @@ import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
 import React from "react";
 import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 const Body = () => {
   const [list, setList] = useState([]);
   const [filteredRestaurant, setFilteredRestaurant] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const [page, setPage] = useState(1);
+  const [perPage] = useState(9);
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [page]);
 
   const fetchData = async () => {
     const data = await fetch(
-      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.6461662&lng=77.227223&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.6461662&lng=77.227223&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING&page=${page}"
     );
     const json = await data.json();
     setList(
@@ -25,6 +28,22 @@ const Body = () => {
       json.data.cards[4].card.card.gridElements.infoWithStyle.restaurants
     );
   };
+
+  const totalPages = Math.ceil(list.length / perPage);
+
+  const handlePrev = () => {
+    setPage((prevPage) => Math.max(prevPage - 1, 1));
+  };
+
+  const handleNext = () => {
+    setPage((nextPage) => Math.max(nextPage + 1, totalPages));
+  };
+
+  const onlineStatus = useOnlineStatus();
+
+  if (onlineStatus === false) {
+    return <h2>Looks like you are offline. Check your internet.</h2>;
+  }
 
   return list.length === 0 ? (
     <Shimmer />
@@ -68,6 +87,21 @@ const Body = () => {
             <RestaurantCard resData={item} />
           </Link>
         ))}
+      </div>
+      <div>
+        <div className="pagination">
+          <button className="btn" onClick={handlePrev} disabled={page == 1}>
+            prev
+          </button>
+          <span>{`Page ${page} of ${totalPages}`}</span>
+          <button
+            className="btn"
+            onClick={handleNext}
+            disabled={page == totalPages}
+          >
+            next
+          </button>
+        </div>
       </div>
     </div>
   );
