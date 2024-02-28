@@ -1,4 +1,4 @@
-import RestaurantCard from "./RestaurantCard";
+import RestaurantCard, { promotedLabel } from "./RestaurantCard";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
 import React from "react";
@@ -11,6 +11,8 @@ const Body = () => {
   const [searchText, setSearchText] = useState("");
   const [page, setPage] = useState(1);
   const [perPage] = useState(20);
+
+  const newResCard = promotedLabel(RestaurantCard);
 
   useEffect(() => {
     fetchData();
@@ -89,7 +91,11 @@ const Body = () => {
       <div className="flex-wrap grid grid-cols-4">
         {filteredRestaurant.map((item) => (
           <Link key={item.info.id} to={"/restaurants/" + item.info.id}>
-            <RestaurantCard resData={item} />
+            {item.info.promoted ? (
+              <newResCard resData={item} />
+            ) : (
+              <RestaurantCard resData={item} />
+            )}
           </Link>
         ))}
       </div>
